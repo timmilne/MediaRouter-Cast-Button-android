@@ -77,4 +77,5 @@ It seemed to run and deploy to the emulator!  Finally my first success with a sa
 Now when running it, it seems some resources are missing and exceptions thrown...
 
 
-I did skip some app registration steps....
+I did skip some app registration steps... Ahh, indeed, it is barfing on the second resource, which is the
+app ID.  I'll need to register that before moving forward.
