@@ -20,6 +20,7 @@ Set upstream
 Fetched upstream
 Merged to upstream
 
+
 Now, I'm not sure how I'm supposed to compile these samples...
 
 
@@ -53,6 +54,7 @@ That resolved a lot of my issues.  I learned this from here:
 
 	http://stackoverflow.com/questions/11550704/unknown-exception-in-parsesdkcontent
 
+
 Then I noticed a circular reference with mediarouter pointing to appcompat pointing back to mediarouter, so
 I deleted the line in the appcompat project.properties (and refreshed):
 
@@ -77,5 +79,27 @@ It seemed to run and deploy to the emulator!  Finally my first success with a sa
 Now when running it, it seems some resources are missing and exceptions thrown...
 
 
-I did skip some app registration steps... Ahh, indeed, it is barfing on the second resource, which is the
-app ID.  I'll need to register that before moving forward.
+I did skip some app registration steps... Ahh, indeed, it is barfing on the APP_ID resource.
+I'll need to register that before moving forward, or I can use the default media container as outlined here:
+
+https://developers.google.com/cast/docs/receiver_apps
+
+So as a workaround, I replaced the calls to all the MediaRouteSelector constructors in the MediaRouter
+classes:
+
+// TPM use the default APP_ID
+/*
+mMediaRouteSelector = new MediaRouteSelector.Builder()
+		.addControlCategory(
+				CastMediaControlIntent.categoryForCast(getResources()
+						.getString(R.string.app_id))).build();
+*/
+mMediaRouteSelector = new MediaRouteSelector.Builder()
+		.addControlCategory(CastMediaControlIntent.DEFAULT_MEDIA_RECEIVER_APPLICATION_ID)
+		.build();
+
+ 
+And now it compiles and runs fine!!
+
+
+This was a fun learning example for java and the environment, but doesn't actually show much about casting...
