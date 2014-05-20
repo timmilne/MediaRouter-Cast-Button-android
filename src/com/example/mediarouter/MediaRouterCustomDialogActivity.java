@@ -60,10 +60,16 @@ public class MediaRouterCustomDialogActivity extends ActionBarActivity {
 
 		mMediaRouter = MediaRouter.getInstance(getApplicationContext());
 		// Create a MediaRouteSelector for the type of routes your app supports
+		// TPM use the default APP_ID
+		/*
 		mMediaRouteSelector = new MediaRouteSelector.Builder()
 				.addControlCategory(
 						CastMediaControlIntent.categoryForCast(getResources()
 								.getString(R.string.app_id))).build();
+		*/
+		mMediaRouteSelector = new MediaRouteSelector.Builder()
+				.addControlCategory(CastMediaControlIntent.DEFAULT_MEDIA_RECEIVER_APPLICATION_ID)
+				.build();
 		// Create a MediaRouter callback for discovery events
 		mMediaRouterCallback = new MyMediaRouterCallback();
 	}
